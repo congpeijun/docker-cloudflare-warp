@@ -2,8 +2,8 @@ name: Publish Docker image
 on:
   push:
   pull_request:
-  schedule:
-    - cron: "0 0 * * *"
+  # schedule:
+  #   - cron: "0 0 * * *"
   workflow_dispatch:
 jobs:
   publish-docker-image:
@@ -43,7 +43,7 @@ jobs:
           build-args: CLOUDFLARE_WARP_VERSION=${{steps.prepare-docker-image-build-metadata.outputs.DOCKER_IMAGE_BUILD_ARG_CLOUDFLARE_WARP_VERSION}}
           push: ${{github.event_name != 'pull_request'}}
           tags: |
-            ${{secrets.DOCKER_USERNAME}}/cloudflare-warp:${{steps.prepare-docker-image-build-metadata.outputs.DOCKER_IMAGE_TAG}}
-            ${{secrets.DOCKER_USERNAME}}/cloudflare-warp:latest
-            ghcr.io/${{github.repository_owner}}/cloudflare-warp:${{steps.prepare-docker-image-build-metadata.outputs.DOCKER_IMAGE_TAG}}
-            ghcr.io/${{github.repository_owner}}/cloudflare-warp:latest
+            ${{secrets.DOCKER_USERNAME}}/docker-warp-socks:${{steps.prepare-docker-image-build-metadata.outputs.DOCKER_IMAGE_TAG}}
+            ${{secrets.DOCKER_USERNAME}}/docker-warp-socks:latest
+            ghcr.io/${{github.repository_owner}}/docker-warp-socks:${{steps.prepare-docker-image-build-metadata.outputs.DOCKER_IMAGE_TAG}}
+            ghcr.io/${{github.repository_owner}}/docker-warp-socks:latest
