@@ -20,8 +20,11 @@ RUN apk add --no-cache nftables dbus-libs
 RUN for TARBALL in s6-overlay-noarch.tar.xz s6-overlay-x86_64.tar.xz s6-overlay-symlinks-noarch.tar.xz s6-overlay-symlinks-arch.tar.xz; do wget -qO- https://github.com/just-containers/s6-overlay/releases/download/v$S6_OVERLAY_VERSION/$TARBALL | tar -xpJ -C /; done
 RUN export GLIBC_PKG_DIR=$(mktemp -d) \
 	&& for PKG in glibc-$GLIBC_VERSION.apk glibc-bin-$GLIBC_VERSION.apk; do wget -q --directory-prefix $GLIBC_PKG_DIR https://github.com/sgerrand/alpine-pkg-glibc/releases/download/$GLIBC_VERSION/$PKG; done \
-	&& apk add --no-cache --allow-untrusted --force-overwrite $GLIBC_PKG_DIR/* \
+	&& apk add --no-cache --allow-untrusted --force-overwrite $GLIBC_PKG_DIR/* tzdata socat ca-certificates \
 	&& rm -rf $GLIBC_PKG_DIR \
 	&& /usr/glibc-compat/sbin/ldconfig /lib /usr/glibc-compat/lib
 
+VOLUME [ "/var/lib/cloudflare-warp" ]
+
+EXPOSE 40001
 ENTRYPOINT ["/init"]

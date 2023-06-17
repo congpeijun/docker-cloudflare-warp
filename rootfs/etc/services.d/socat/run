@@ -1,0 +1,4 @@
+#!/usr/bin/with-contenv sh
+set -e
+LISTENING_PORT=${SOCKS_LISTENING_PORT:-40001}
+exec 2>&1 socat TCP-LISTEN:$LISTENING_PORT,fork,reuseaddr TCP:127.0.0.1:40000
